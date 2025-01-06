@@ -1,4 +1,4 @@
-package com.ll.chatAi.domain.chat.chatRoom.controller;
+package com.ll.chatAi.domain.chat;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.openai.OpenAiChatModel;
@@ -21,7 +21,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/chat")
 @RestController
 @RequiredArgsConstructor
-public class ChatAi {
+public class AiChatController {
 
     private final OpenAiChatModel openAiChatModel;  // OpenAi 라이브러리 객체
 
