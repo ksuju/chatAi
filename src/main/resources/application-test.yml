@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:db_test;MODE=MySQL
+    username: sa
+    password:
+      
+# TEST는 보통 h2에서 하기 때문에 DB 연결정보 변경함
