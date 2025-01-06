@@ -8,8 +8,6 @@ import com.ll.chatAi.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * packageName    : com.ll.chatAi.domain.chat.chatMessage.controller
  * fileName       : ApiV1ChatMessageContoller
@@ -31,16 +29,17 @@ public class ApiV1ChatMessageController {
 
     // 채팅방 메시지 목록을 가져오는 로직 구현이 어려움
     @GetMapping("/{roomId}/messages")
-    public RsData<List<ChatRoom>> messages(@PathVariable Long roomId) {
+    public void messages(@PathVariable Long roomId) {
 
         // 저장부터 한 뒤에 구현하자, 저장 시 ChatRoom의 messages 리스트에 저장하는 로직 필요
-        chatMessageService.messages(roomId);
+//        List<ChatMessage> chatMessages = chatMessageService.messages(roomId);
 
-        return RsData.of("S-1","채팅방 메시지 목록 조회 완료");
+//        System.out.println("chatMessages : " + chatMessages);
+
     }
 
     @PostMapping("/{roomId}/messages")
-    public String createChat(@PathVariable Long roomId,
+    public RsData<?> createChat(@PathVariable Long roomId,
                              @RequestBody MessageRequest messageRequest) {
 
         ChatRoom chatRoom = chatRoomService.findRoom(roomId);
@@ -49,6 +48,6 @@ public class ApiV1ChatMessageController {
                 messageRequest.getWriterName(),
                 messageRequest.getContent());
 
-        return roomId + "번 채팅방 메시지 생성 완료";
+        return RsData.of("S-1",roomId+"번 채팅방 메시지 생성 완료");
     }
 }

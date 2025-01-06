@@ -7,6 +7,8 @@ import com.ll.chatAi.domain.chat.chatRoom.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * packageName    : com.ll.chatAi.domain.chat.chatMessage.service
  * fileName       : ChatMessageService
@@ -25,17 +27,22 @@ public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomRepository chatRoomRepository;
 
-    public void messages(Long roomId) {
+    public List<ChatMessage> messages(Long roomId) {
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
+
+        List<ChatMessage> chatMessages = chatRoom.getChatMessages();
+
+        return chatMessages;
     }
 
+    // 메시지 저장
     public void add(ChatRoom chatRoom, String writerName, String content) {
-
         ChatMessage chatMessage = ChatMessage.builder()
                 .chatRoom(chatRoom)
                 .writerName(writerName)
                 .content(content)
                 .build();
-
+        
         chatMessageRepository.save(chatMessage);
     }
 

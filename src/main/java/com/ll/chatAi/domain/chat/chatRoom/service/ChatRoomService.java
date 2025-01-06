@@ -5,6 +5,8 @@ import com.ll.chatAi.domain.chat.chatRoom.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * packageName    : com.ll.chatAi.domain.chat.chatRoom.service
  * fileName       : ChatRoomService
@@ -23,8 +25,8 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
 
     // 채팅방 목록 조회
-    public void list() {
-        chatRoomRepository.findAll();
+    public List<ChatRoom> list() {
+        return chatRoomRepository.findAll();
     }
 
     // 채팅방 찾기

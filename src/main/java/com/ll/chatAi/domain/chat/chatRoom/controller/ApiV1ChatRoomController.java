@@ -2,9 +2,11 @@ package com.ll.chatAi.domain.chat.chatRoom.controller;
 
 import com.ll.chatAi.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.chatAi.domain.chat.chatRoom.service.ChatRoomService;
-import com.ll.chatAi.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * packageName    : com.ll.chatAi.domain.chat.chatRoom.controller
@@ -20,33 +22,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/chat/rooms")
 @RequiredArgsConstructor
+@CrossOrigin(
+        origins = "https://cdpn.io"
+)
 public class ApiV1ChatRoomController {
 
     private final ChatRoomService chatRoomService;
 
+    // 채팅방 목록 조회
     @GetMapping("")
-    public RsData<?> chatRoomList() {
-
-        // 채팅방 목록 조회
-        chatRoomService.list();
-
-        return RsData.of("S-1","채팅방 목록 조회완료");
+    public List<ChatRoom> chatRoomList() {
+        return chatRoomService.list();
     }
 
+    // 단건 채팅방 조회
     @GetMapping("/{roomId}")
-    public RsData<ChatRoom> chatRoom(@PathVariable Long roomId) {
-
-        ChatRoom chatRoom = chatRoomService.findRoom(roomId);
-
-        return RsData.of("S-1", "단건 채팅방 조회완료", chatRoom);
+    public ChatRoom chatRoom(@PathVariable Long roomId) {
+        return chatRoomService.findRoom(roomId);
     }
 
+    // 채팅방 생성
     @PostMapping("")
-    public RsData<ChatRoom> createChatRoom(@RequestBody String name) {
-
-        // 채팅방 생성
-        ChatRoom chatRoom = chatRoomService.create(name);
-
-        return RsData.of("S-1","채팅방 생성 완료", chatRoom);
+    public ChatRoom createChatRoom(@RequestBody HashMap<String, String> name) {
+        return chatRoomService.create(name.get("name"));
     }
 }
