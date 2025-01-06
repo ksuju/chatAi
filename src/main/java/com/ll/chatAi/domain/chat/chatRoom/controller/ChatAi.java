@@ -1,11 +1,8 @@
-package com.ll.chatAi;
+package com.ll.chatAi.domain.chat.chatRoom.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +21,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/chat")
 @RestController
 @RequiredArgsConstructor
-public class ChatController {
+public class ChatAi {
 
     private final OpenAiChatModel openAiChatModel;  // OpenAi 라이브러리 객체
 
