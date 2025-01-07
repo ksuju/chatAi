@@ -4,6 +4,8 @@ import com.ll.chatAi.domain.chat.chatMessage.entity.ChatMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * packageName    : com.ll.chatAi.domain.chat.chatRoom.repository
  * fileName       : ChatRoomRepository
@@ -17,4 +19,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
+    List<ChatMessage> findByChatRoomIdAndIdAfter(long roomId, long afterId);
 }

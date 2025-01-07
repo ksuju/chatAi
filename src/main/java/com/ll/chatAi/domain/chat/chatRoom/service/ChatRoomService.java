@@ -31,7 +31,9 @@ public class ChatRoomService {
 
     // 채팅방 찾기
     public ChatRoom findRoom(Long roomId) {
-        return chatRoomRepository.findById(roomId).get();
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
+
+        return chatRoom;
     }
 
     // 채팅방 생성
@@ -43,7 +45,7 @@ public class ChatRoomService {
         return chatRoomRepository.save(chatRoom);
     }
 
-    // 모든 데이터 삭제
+    // 모든 데이터 삭제 (ApplicationRunner_NotProd.java 에서 사용)
     public void deleteAll() {
         chatRoomRepository.deleteAll();
     }

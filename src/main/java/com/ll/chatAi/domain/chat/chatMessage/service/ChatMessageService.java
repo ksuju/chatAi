@@ -27,12 +27,9 @@ public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomRepository chatRoomRepository;
 
-    public List<ChatMessage> messages(Long roomId) {
-        ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
+    public List<ChatMessage> messages(Long roomId, Long afterId) {
 
-        List<ChatMessage> chatMessages = chatRoom.getChatMessages();
-
-        return chatMessages;
+        return chatMessageRepository.findByChatRoomIdAndIdAfter(roomId, afterId);
     }
 
     // 메시지 저장
@@ -46,7 +43,7 @@ public class ChatMessageService {
         chatMessageRepository.save(chatMessage);
     }
 
-    // 모든 데이터 삭제
+    // 모든 데이터 삭제 (ApplicationRunner_NotProd.java 에서 사용)
     public void deleteAll() {
         chatMessageRepository.deleteAll();
     }

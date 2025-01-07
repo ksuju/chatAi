@@ -1,5 +1,6 @@
 package com.ll.chatAi.domain.chat.chatMessage.controller;
 
+import com.ll.chatAi.domain.chat.chatMessage.entity.ChatMessage;
 import com.ll.chatAi.domain.chat.chatMessage.request.MessageRequest;
 import com.ll.chatAi.domain.chat.chatMessage.service.ChatMessageService;
 import com.ll.chatAi.domain.chat.chatRoom.entity.ChatRoom;
@@ -7,6 +8,8 @@ import com.ll.chatAi.domain.chat.chatRoom.service.ChatRoomService;
 import com.ll.chatAi.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * packageName    : com.ll.chatAi.domain.chat.chatMessage.controller
@@ -22,32 +25,34 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/chat/rooms")
 @RequiredArgsConstructor
+@CrossOrigin(
+        origins = "https://cdpn.io"
+)
 public class ApiV1ChatMessageController {
 
     private final ChatMessageService chatMessageService;
     private final ChatRoomService chatRoomService;
 
-    // 채팅방 메시지 목록을 가져오는 로직 구현이 어려움
+    // 채팅방 메시지 목록 가져오기
     @GetMapping("/{roomId}/messages")
-    public void messages(@PathVariable Long roomId) {
+    public List<ChatMessage> messages(@PathVariable Long roomId,
+                         @RequestParam Long afterChatMessageId) {
 
-        // 저장부터 한 뒤에 구현하자, 저장 시 ChatRoom의 messages 리스트에 저장하는 로직 필요
-//        List<ChatMessage> chatMessages = chatMessageService.messages(roomId);
+        List<ChatMessage> chatMessages = chatMessageService.messages(roomId, afterChatMessageId);
 
-//        System.out.println("chatMessages : " + chatMessages);
-
+        return chatMessages;
     }
 
-    @PostMapping("/{roomId}/messages")
-    public RsData<?> createChat(@PathVariable Long roomId,
+    @PostMapping("/{chatRoomId}/messages")
+    public RsData<?> createChat(@PathVariable Long chatRoomId,
                              @RequestBody MessageRequest messageRequest) {
 
-        ChatRoom chatRoom = chatRoomService.findRoom(roomId);
+        ChatRoom chatRoom = chatRoomService.findRoom(chatRoomId);
 
         chatMessageService.add(chatRoom,
                 messageRequest.getWriterName(),
                 messageRequest.getContent());
 
-        return RsData.of("S-1",roomId+"번 채팅방 메시지 생성 완료");
+        return RsData.of("S-1",chatRoomId+"번 채팅방 메시지 생성 완료");
     }
 }
