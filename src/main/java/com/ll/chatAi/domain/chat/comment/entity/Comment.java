@@ -1,18 +1,16 @@
-package com.ll.chatAi.domain.chat.member.entity;
+package com.ll.chatAi.domain.chat.comment.entity;
 
 import com.ll.chatAi.domain.chat.article.entity.Article;
-import com.ll.chatAi.domain.chat.comment.entity.Comment;
+import com.ll.chatAi.domain.chat.member.entity.Member;
 import com.ll.chatAi.global.jpa.BaseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
-
 /**
- * packageName    : com.ll.chatAi.domain.chat.member.entity
- * fileName       : MemberEntity
+ * packageName    : com.ll.chatAi.domain.chat.comment.entity
+ * fileName       : Comment
  * author         : sungjun
  * date           : 2025-01-08
  * description    : 자동 주석 생성
@@ -28,13 +26,12 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 @ToString(callSuper = true)
-public class Member extends BaseEntity {
-    @OneToMany
-    private List<Article> article;
+public class Comment extends BaseEntity {
+    @ManyToOne
+    private Member member;
 
-    @OneToMany
-    private List<Comment> comments;
+    @ManyToOne
+    private Article article;
 
-    private String username;
-    private String password;
+    private String content;
 }

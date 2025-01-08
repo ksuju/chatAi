@@ -6,6 +6,8 @@ import com.ll.chatAi.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * packageName    : com.ll.chatAi.domain.chat.member.service
  * fileName       : MemberService
@@ -29,5 +31,10 @@ public class MemberService {
                 .build();
         memberRepository.save(member);
         return RsData.of("200","회원가입완료", member);
+    }
+
+    //Member member1 = memberService.findById(1L).get();
+    public Optional<Member> findById(Long memberId) {
+        return memberRepository.findById(memberId);
     }
 }

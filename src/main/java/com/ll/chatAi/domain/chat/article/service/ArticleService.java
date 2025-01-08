@@ -2,9 +2,14 @@ package com.ll.chatAi.domain.chat.article.service;
 
 import com.ll.chatAi.domain.chat.article.entity.Article;
 import com.ll.chatAi.domain.chat.article.repository.ArticleRepository;
+import com.ll.chatAi.domain.chat.comment.repository.CommentRepository;
+import com.ll.chatAi.domain.chat.member.entity.Member;
 import com.ll.chatAi.global.rsData.RsData;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * packageName    : com.ll.chatAi.domain.chat.article.service
@@ -21,12 +26,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
+    private final CommentRepository commentRepository;
 
-    public RsData<Article> write(Long articleId, String subject, String content) {
+    public RsData<Article> write(Long memberId, String title, String content) {
 
         Article article = Article.builder()
-                .articleId(articleId)
-                .subject(subject)
+                .author(Member.builder().id(memberId).build())
+                .title(title)
                 .content(content)
                 .build();
 
@@ -34,4 +40,20 @@ public class ArticleService {
 
         return RsData.of("200","포스팅완료", article);
     }
+
+    public Optional<Article> findById(Long articleId) {
+        Optional<Article> article = articleRepository.findById(articleId);
+
+        return article;
+    }
+
+    //articleService.modify(article, "수정된 제목", "수정된 내용")
+    @Transactional
+    public void modify(Article article, String title, String content) {
+        article.setTitle(title);
+        article.setContent(content);
+        articleRepository.save(article);
+    }
+
+
 }

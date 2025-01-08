@@ -1,9 +1,15 @@
 package com.ll.chatAi.domain.chat.article.entity;
 
+import com.ll.chatAi.domain.chat.comment.entity.Comment;
+import com.ll.chatAi.domain.chat.member.entity.Member;
 import com.ll.chatAi.global.jpa.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 /**
  * packageName    : com.ll.chatAi.domain.chat.article.entity
@@ -25,6 +31,10 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 public class Article extends BaseEntity {
     private long articleId;
-    private String subject;
+    private String title;
     private String content;
+    @ManyToOne
+    private Member author;
+    @OneToMany
+    private List<Comment> comment;
 }
