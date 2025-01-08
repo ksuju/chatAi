@@ -71,6 +71,14 @@ public class NotProd {
             commentService.addComment(member1, article3,"댓글11");
             commentService.addComment(member1, article3,"댓글12");
 
+            // 댓글 수정 테스트
+            article1.getComments().forEach(comment -> {
+                String modifiedContent = comment.getContent() + " (수정됨)";
+                commentService.modifyComment(comment, modifiedContent);
+                System.out.println("수정된 댓글: " + comment);
+            });
+
+
             IntStream.rangeClosed(1, 100).forEach(num -> {
                 chatMessageService.add(chatRoom1, "TEST", "메시지" + num);
             });

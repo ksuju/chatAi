@@ -9,6 +9,7 @@ import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +36,23 @@ public class Article extends BaseEntity {
     private String content;
     @ManyToOne
     private Member author;
-    @OneToMany
-    private List<Comment> comment;
+
+    @OneToMany(mappedBy = "article")
+    @ToString.Exclude // 순환 참조 방지
+    private List<Comment> comments;
+
+    public void addComment(Comment comment) {
+        if (this.comments == null) {
+            this.comments = new ArrayList<>();
+        }
+        this.comments.add(comment);
+        comment.setArticle(this); // 연관 관계 설정
+    }
+
+    public void removeComment(Comment comment) {
+        if (this.comments != null) {
+            this.comments.remove(comment);
+            comment.setArticle(null); // 연관 관계 끊기
+        }
+    }
 }

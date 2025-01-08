@@ -1,8 +1,8 @@
 package com.ll.chatAi.domain.chat.member.entity;
 
 import com.ll.chatAi.domain.chat.article.entity.Article;
-import com.ll.chatAi.domain.chat.comment.entity.Comment;
 import com.ll.chatAi.global.jpa.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.*;
@@ -29,11 +29,9 @@ import java.util.List;
 @SuperBuilder
 @ToString(callSuper = true)
 public class Member extends BaseEntity {
-    @OneToMany
-    private List<Article> article;
-
-    @OneToMany
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @ToString.Exclude // 순환 참조 방지
+    private List<Article> articles;
 
     private String username;
     private String password;

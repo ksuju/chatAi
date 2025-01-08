@@ -1,7 +1,6 @@
 package com.ll.chatAi.domain.chat.comment.entity;
 
 import com.ll.chatAi.domain.chat.article.entity.Article;
-import com.ll.chatAi.domain.chat.member.entity.Member;
 import com.ll.chatAi.global.jpa.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -28,10 +27,8 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 public class Comment extends BaseEntity {
     @ManyToOne
-    private Member member;
-
-    @ManyToOne
+    @ToString.Exclude // 순환 참조 방지
     private Article article;
-
+    private long memberId;
     private String content;
 }
