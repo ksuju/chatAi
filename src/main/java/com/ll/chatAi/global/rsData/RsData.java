@@ -3,7 +3,7 @@ package com.ll.chatAi.global.rsData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Optional;
+import static lombok.AccessLevel.PROTECTED;
 
 /**
  * packageName    : com.ll.chatAi.global.rsData
@@ -16,34 +16,25 @@ import java.util.Optional;
  * -----------------------------------------------------------
  * 2025-01-06        kyd54       최초 생성
  */
+@AllArgsConstructor(access = PROTECTED)
 @Getter
-@AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class RsData<T> {
-    private String resultCode;
-    private String msg;
-    private T data;
+    private final String resultCode;
+    private final String msg;
+    private final T data;
+    private final int statusCode;
 
     public static <T> RsData<T> of(String resultCode, String msg, T data) {
-        return new RsData<>(resultCode, msg, data);
-    }
+        int statusCode = Integer.parseInt(resultCode);
 
-    public static <T> RsData<T> of(String resultCode, String msg) {
-        return of(resultCode, msg, null);
+        return new RsData<>(resultCode, msg, data, statusCode);
     }
 
     public boolean isSuccess() {
-        return resultCode.startsWith("S-");
+        return statusCode >= 200 && statusCode < 400;
     }
 
     public boolean isFail() {
         return !isSuccess();
-    }
-
-    public Optional<RsData<T>> optional() {
-        return Optional.of(this);
-    }
-
-    public <T> RsData<T> newDataOf(T data) {
-        return new RsData<T>(getResultCode(), getMsg(), data);
     }
 }
