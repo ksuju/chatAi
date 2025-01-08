@@ -23,7 +23,8 @@ import java.util.List;
 @RequestMapping("/api/v1/chat/rooms")
 @RequiredArgsConstructor
 @CrossOrigin(
-        origins = "https://cdpn.io"
+//        origins = "https://cdpn.io"
+        origins = "http://localhost:5173"
 )
 public class ApiV1ChatRoomController {
 

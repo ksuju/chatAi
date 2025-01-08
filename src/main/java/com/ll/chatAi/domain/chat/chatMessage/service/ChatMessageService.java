@@ -33,7 +33,7 @@ public class ChatMessageService {
     }
 
     // 메시지 저장
-    public void add(ChatRoom chatRoom, String writerName, String content) {
+    public ChatMessage add(ChatRoom chatRoom, String writerName, String content) {
         ChatMessage chatMessage = ChatMessage.builder()
                 .chatRoom(chatRoom)
                 .writerName(writerName)
@@ -41,6 +41,7 @@ public class ChatMessageService {
                 .build();
         
         chatMessageRepository.save(chatMessage);
+        return chatMessage;
     }
 
     // 모든 데이터 삭제 (ApplicationRunner_NotProd.java 에서 사용)

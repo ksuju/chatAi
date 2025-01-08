@@ -5,7 +5,6 @@ import com.ll.chatAi.domain.chat.chatMessage.request.MessageRequest;
 import com.ll.chatAi.domain.chat.chatMessage.service.ChatMessageService;
 import com.ll.chatAi.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.chatAi.domain.chat.chatRoom.service.ChatRoomService;
-import com.ll.chatAi.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +25,8 @@ import java.util.List;
 @RequestMapping("/api/v1/chat/rooms")
 @RequiredArgsConstructor
 @CrossOrigin(
-        origins = "https://cdpn.io"
+//        origins = "https://cdpn.io"
+        origins = "http://localhost:5173"
 )
 public class ApiV1ChatMessageController {
 
@@ -36,7 +36,11 @@ public class ApiV1ChatMessageController {
     // 채팅방 메시지 목록 가져오기
     @GetMapping("/{roomId}/messages")
     public List<ChatMessage> messages(@PathVariable Long roomId,
-                         @RequestParam Long afterChatMessageId) {
+                         @RequestParam(required = false) Long afterChatMessageId) {
+
+        if(afterChatMessageId == null) {
+            afterChatMessageId = 0L;
+        }
 
         List<ChatMessage> chatMessages = chatMessageService.messages(roomId, afterChatMessageId);
 
@@ -44,15 +48,15 @@ public class ApiV1ChatMessageController {
     }
 
     @PostMapping("/{chatRoomId}/messages")
-    public RsData<?> createChat(@PathVariable Long chatRoomId,
+    public ChatMessage createChat(@PathVariable Long chatRoomId,
                              @RequestBody MessageRequest messageRequest) {
 
         ChatRoom chatRoom = chatRoomService.findRoom(chatRoomId);
 
-        chatMessageService.add(chatRoom,
+        ChatMessage chatMessage = chatMessageService.add(chatRoom,
                 messageRequest.getWriterName(),
                 messageRequest.getContent());
 
-        return RsData.of("S-1",chatRoomId+"번 채팅방 메시지 생성 완료");
+        return chatMessage;
     }
 }
