@@ -3,6 +3,7 @@ package com.ll.chatAi.domain.chat.chatMessage.entity;
 import com.ll.chatAi.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.chatAi.global.jpa.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -26,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString(callSuper = true)
 public class ChatMessage extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ChatRoom chatRoom;
     private String writerName;
     private String content;

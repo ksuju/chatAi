@@ -1,4 +1,4 @@
-package com.ll.chatAi.domain.chat.comment.entity;
+package com.ll.chatAi.domain.chat.tag.entity;
 
 import com.ll.chatAi.domain.chat.article.entity.Article;
 import com.ll.chatAi.global.jpa.BaseEntity;
@@ -9,27 +9,25 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * packageName    : com.ll.chatAi.domain.chat.comment.entity
- * fileName       : Comment
+ * packageName    : com.ll.chatAi.domain.chat.tag.entity
+ * fileName       : Tag
  * author         : sungjun
- * date           : 2025-01-08
+ * date           : 2025-01-09
  * description    : 자동 주석 생성
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2025-01-08        kyd54       최초 생성
+ * 2025-01-09        kyd54       최초 생성
  */
 @Entity
-@Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
-public class Comment extends BaseEntity {
+public class ArticleTag extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
-    @ToString.Exclude // 순환 참조 방지
     private Article article;
-    private long memberId;
     private String content;
 }

@@ -2,8 +2,10 @@ package com.ll.chatAi.domain.chat.article.entity;
 
 import com.ll.chatAi.domain.chat.comment.entity.Comment;
 import com.ll.chatAi.domain.chat.member.entity.Member;
+import com.ll.chatAi.domain.chat.tag.entity.ArticleTag;
 import com.ll.chatAi.global.jpa.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.*;
@@ -11,6 +13,9 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static jakarta.persistence.CascadeType.ALL;
 
 /**
  * packageName    : com.ll.chatAi.domain.chat.article.entity
@@ -34,7 +39,8 @@ public class Article extends BaseEntity {
     private long articleId;
     private String title;
     private String content;
-    @ManyToOne
+//    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)  // 배치사이즈 설정과 관련
     private Member author;
 
     @OneToMany(mappedBy = "article")
@@ -47,6 +53,37 @@ public class Article extends BaseEntity {
         }
         this.comments.add(comment);
         comment.setArticle(this); // 연관 관계 설정
+    }
+
+    @OneToMany(mappedBy = "article", cascade = ALL, orphanRemoval = true)
+    @Builder.Default
+    @ToString.Exclude // 순환 참조 방지
+    private List<ArticleTag> tags = new ArrayList<>();
+    public void addTag(String tagContent) {
+        ArticleTag tag = ArticleTag.builder()
+                .article(this)
+                .content(tagContent)
+                .build();
+        tags.add(tag);
+    }
+
+    public void addTags(String... tagContents) {
+        for (String tagContent : tagContents) {
+            addTag(tagContent);
+        }
+    }
+
+    public String getTagsStr() {
+        String tagstr = tags
+                .stream()
+                .map(ArticleTag::getContent)
+                .collect(Collectors.joining(" #"));
+
+        if(tagstr.isBlank()) {
+            return "";
+        }
+
+        return "#" + tagstr;
     }
 
 //    public void removeComment(Comment comment) {  안써서 주석

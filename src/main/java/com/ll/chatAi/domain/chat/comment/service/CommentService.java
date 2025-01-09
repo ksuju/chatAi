@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * packageName    : com.ll.chatAi.domain.chat.comment.service
  * fileName       : CommentService
@@ -52,4 +54,11 @@ public class CommentService {
     public void deleteComment(Comment comment) {
         commentRepository.delete(comment);
     }
+
+    public List<Comment> findByAuthorId(Long memberId) {
+        List<Comment> comments = commentRepository.findAllById(memberId);
+        return comments;
+    }
 }
+
+

@@ -105,6 +105,11 @@ public class NotProd {
                     System.out.println("댓글 수: " + article.getComments().size());
                 });
 
+                article1.addTag("자바");
+                article1.addTag("백엔드");
+                article2.addTags("프레임워크", "스프링부트");
+                article4.addTags("자바", "스프링부트");
+
 
                 System.out.println("Not Prod");
             }
