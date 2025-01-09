@@ -22,11 +22,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
+@org.springframework.transaction.annotation.Transactional(readOnly = true)
 public class CommentService {
     private final CommentRepository commentRepository;
     private final ArticleRepository articleRepository;
 
     //article2.addComment(member1, "댓글 입니다.");
+    @Transactional
     public void addComment(Member member, Article article, String content) {
         long memberId = member.getId();
         Comment comment = Comment.builder()
@@ -43,6 +45,11 @@ public class CommentService {
     @Transactional
     public void modifyComment(Comment comment, String content) {
         comment.setContent(content);
-        commentRepository.save(comment);
+//        commentRepository.save(comment);
+    }
+
+    @Transactional
+    public void deleteComment(Comment comment) {
+        commentRepository.delete(comment);
     }
 }

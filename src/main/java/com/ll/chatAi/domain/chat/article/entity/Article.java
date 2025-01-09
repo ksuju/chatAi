@@ -49,10 +49,10 @@ public class Article extends BaseEntity {
         comment.setArticle(this); // 연관 관계 설정
     }
 
-    public void removeComment(Comment comment) {
-        if (this.comments != null) {
-            this.comments.remove(comment);
-            comment.setArticle(null); // 연관 관계 끊기
-        }
-    }
+//    public void removeComment(Comment comment) {  안써서 주석
+//        if (this.comments != null) {
+//            this.comments.remove(comment);
+//            comment.setArticle(null); // 연관 관계 끊기
+//        }
+//    }
 }

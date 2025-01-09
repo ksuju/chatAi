@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,10 +25,12 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
+@org.springframework.transaction.annotation.Transactional(readOnly = true)
 public class ArticleService {
     private final ArticleRepository articleRepository;
     private final CommentRepository commentRepository;
 
+    @Transactional
     public RsData<Article> write(Long memberId, String title, String content) {
 
         Article article = Article.builder()
@@ -55,5 +58,7 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
-
+    public List<Article> findAll() {
+        return articleRepository.findAll();
+    }
 }
