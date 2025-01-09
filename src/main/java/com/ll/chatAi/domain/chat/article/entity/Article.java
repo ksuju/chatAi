@@ -36,7 +36,6 @@ import static jakarta.persistence.CascadeType.ALL;
 @SuperBuilder
 @ToString(callSuper = true)
 public class Article extends BaseEntity {
-    private long articleId;
     private String title;
     private String content;
 //    @ManyToOne

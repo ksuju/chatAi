@@ -7,6 +7,8 @@ import com.ll.chatAi.domain.chat.member.entity.Member;
 import com.ll.chatAi.global.rsData.RsData;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +31,18 @@ import java.util.Optional;
 public class ArticleService {
     private final ArticleRepository articleRepository;
     private final CommentRepository commentRepository;
+
+    // Pageable 페이징하는 내장 객체
+    public Page<Article> search(List<String> kwTypes, String kw, Pageable pageable) {
+        if (kwTypes.contains("title") && kwTypes.contains("body")) {
+            return articleRepository.findByTitleContainingOrContentContaining(kw, kw, pageable);
+        } else if (kwTypes.contains("title")) {
+            return articleRepository.findByTitleContaining(kw, pageable);
+        } else if (kwTypes.contains("body")) {
+            return articleRepository.findByContentContaining(kw, pageable);
+        }
+        return articleRepository.findAll(pageable);
+    }
 
     @Transactional
     public RsData<Article> write(Long memberId, String title, String content) {

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * packageName    : com.ll.chatAi.global.notProd
@@ -109,6 +110,14 @@ public class NotProd {
                 article1.addTag("백엔드");
                 article2.addTags("프레임워크", "스프링부트");
                 article4.addTags("자바", "스프링부트");
+
+                IntStream.rangeClosed(5, 120).forEach(
+                        i -> {
+                            String title = "제목" + i;
+                            String body = "내용" + i;
+                            articleService.write(member2.getId(), title, body);
+                        }
+                );
 
 
                 System.out.println("Not Prod");
