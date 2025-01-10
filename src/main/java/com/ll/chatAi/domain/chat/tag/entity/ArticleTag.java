@@ -1,6 +1,6 @@
-package com.ll.chatAi.domain.chat.chatMessage.entity;
+package com.ll.chatAi.domain.chat.tag.entity;
 
-import com.ll.chatAi.domain.chat.chatRoom.entity.ChatRoom;
+import com.ll.chatAi.domain.chat.article.entity.Article;
 import com.ll.chatAi.global.jpa.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,26 +9,25 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * packageName    : com.ll.chatAi.domain.chat.chatMessage.entity
- * fileName       : ChatMessage
+ * packageName    : com.ll.chatAi.domain.chat.tag.entity
+ * fileName       : Tag
  * author         : sungjun
- * date           : 2025-01-06
+ * date           : 2025-01-09
  * description    : 자동 주석 생성
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2025-01-06        kyd54       최초 생성
+ * 2025-01-09        kyd54       최초 생성
  */
 @Entity
-@Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
-public class ChatMessage extends BaseEntity {
+public class ArticleTag extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
-    private ChatRoom chatRoom;
-    private String writerName;
+    private Article article;
     private String content;
 }

@@ -4,6 +4,15 @@ spring:
   profiles:
     active: dev
     include: secret
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 100 # 배치 사이즈 설정 > Lazy, Eager 설정과 연관
 logging:
   level:
     com.ll.chatAi: DEBUG

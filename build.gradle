@@ -30,7 +30,7 @@ ext {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+//	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -41,6 +41,14 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	// 웹소켓, STOMP
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	// validation > requestBody 앞에 @Valid 어노테이션 넣기 위해 필요
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// security > 인증, 인가를 위함
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// JWT (Json Web Token)
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 dependencyManagement {

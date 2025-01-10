@@ -1,9 +1,9 @@
 package com.ll.chatAi.global.rsData;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Optional;
 
 /**
  * packageName    : com.ll.chatAi.global.rsData
@@ -16,34 +16,20 @@ import java.util.Optional;
  * -----------------------------------------------------------
  * 2025-01-06        kyd54       최초 생성
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
 @Getter
-@AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class RsData<T> {
     private String resultCode;
     private String msg;
     private T data;
 
-    public static <T> RsData<T> of(String resultCode, String msg, T data) {
-        return new RsData<>(resultCode, msg, data);
+    public RsData(String resultCode, String msg) {
+        this(resultCode, msg, null);
     }
 
-    public static <T> RsData<T> of(String resultCode, String msg) {
-        return of(resultCode, msg, null);
-    }
-
-    public boolean isSuccess() {
-        return resultCode.startsWith("S-");
-    }
-
-    public boolean isFail() {
-        return !isSuccess();
-    }
-
-    public Optional<RsData<T>> optional() {
-        return Optional.of(this);
-    }
-
-    public <T> RsData<T> newDataOf(T data) {
-        return new RsData<T>(getResultCode(), getMsg(), data);
+    @JsonIgnore
+    public int getStatusCode() {
+        return Integer.parseInt(resultCode.split("-")[0]);
     }
 }
