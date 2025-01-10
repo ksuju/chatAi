@@ -52,9 +52,9 @@ public class NotProd {
                 ChatRoom chatRoom2 = chatRoomService.create("식사");
                 ChatRoom chatRoom3 = chatRoomService.create("휴식");
 
-                Member member1 = memberService.signup("user1", "1234").getData();
-                Member member2 = memberService.signup("user2", "1234").getData();
-                Member member3 = memberService.signup("user3", "1234").getData();
+                Member member1 = memberService.signup("user1", "1234");
+                Member member2 = memberService.signup("user2", "1234");
+                Member member3 = memberService.signup("user3", "1234");
 
                 Article article1 = articleService.write("제목1", "내용1");
                 Article article2 = articleService.write( "제목2", "내용2");

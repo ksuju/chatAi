@@ -2,7 +2,6 @@ package com.ll.chatAi.member.member.service;
 
 import com.ll.chatAi.domain.chat.member.entity.Member;
 import com.ll.chatAi.domain.chat.member.service.MemberService;
-import com.ll.chatAi.global.rsData.RsData;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,8 +32,7 @@ public class MemberServiceTest {
     @DisplayName("회원가입")
     @Test
     void t1() {
-        RsData<Member> joinRs = memberService.signup("usernew", "1234");
-        Member member = joinRs.getData();
+        Member member = memberService.signup("usernew", "1234");
         assertThat(member.getId()).isGreaterThan(0L);
     }
 }

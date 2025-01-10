@@ -1,8 +1,10 @@
 package com.ll.chatAi.domain.chat.member.controller;
 
+import com.ll.chatAi.domain.chat.member.dto.MemberRequest;
 import com.ll.chatAi.domain.chat.member.entity.Member;
 import com.ll.chatAi.domain.chat.member.service.MemberService;
 import com.ll.chatAi.global.rsData.RsData;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +27,11 @@ public class ApiV1MemberController {
 
     // 회원가입
     @PostMapping("/signup")
-    public RsData<Member> signup(@RequestBody Member member) {
-        return memberService.signup(member.getUsername(), member.getPassword());
+    public RsData<String> signup(@Valid @RequestBody MemberRequest memberRequest) {
+
+        Member member = memberService.signup(memberRequest.getUsername(), memberRequest.getPassword());
+
+        return RsData.of("200", "회원가입 성공", member.getUsername());
     }
 
     // 로그인

@@ -2,8 +2,8 @@ package com.ll.chatAi.domain.chat.member.service;
 
 import com.ll.chatAi.domain.chat.member.entity.Member;
 import com.ll.chatAi.domain.chat.member.repository.MemberRepository;
-import com.ll.chatAi.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,14 +23,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;  // 단방향 암호화 (복호화X)
 
-    public RsData<Member> signup(String username, String password) {
+    public Member signup(String username, String password) {
         Member member = Member.builder()
                 .username(username)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .build();
         memberRepository.save(member);
-        return RsData.of("200","회원가입완료", member);
+        return member;
     }
 
     //Member member1 = memberService.findById(1L).get();

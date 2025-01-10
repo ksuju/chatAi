@@ -1,5 +1,6 @@
 package com.ll.chatAi.domain.chat.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ll.chatAi.domain.chat.article.entity.Article;
 import com.ll.chatAi.global.jpa.BaseEntity;
 import jakarta.persistence.CascadeType;
@@ -34,5 +35,6 @@ public class Member extends BaseEntity {
     private List<Article> articles;
 
     private String username;
+    @JsonIgnore
     private String password;
 }
