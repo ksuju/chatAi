@@ -69,10 +69,21 @@ public class ApiV1MemberController {
         return new RsData<>("200", "로그인에 성공했습니다.");
     }
 
-    // 로그아웃
+    // 로그아웃(쿠키 싹 지우면 됨)
     @GetMapping("/logout")
-    public void logout() {
+    public RsData<Void> logout(HttpServletResponse response) {
+        // 응답 데이터에 accessToken 이름으로 토큰을 발급, null 입력과 시간 0 설정으로 쿠키 초기화
+        Cookie cookie = new Cookie("accessToken", null);
+            cookie.setPath("/");
+            cookie.setMaxAge(0);
+        response.addCookie(cookie);
 
+        Cookie refreshTokenCookie  = new Cookie("refreshToken", null);
+            refreshTokenCookie.setPath("/");
+            refreshTokenCookie.setMaxAge(0);
+        response.addCookie(refreshTokenCookie);
+
+        return new RsData<>("200","로그아웃 성공");
     }
 
     // 내 정보 불러오기
