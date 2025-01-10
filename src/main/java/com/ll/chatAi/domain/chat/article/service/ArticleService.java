@@ -4,7 +4,6 @@ import com.ll.chatAi.domain.chat.article.entity.Article;
 import com.ll.chatAi.domain.chat.article.repository.ArticleRepository;
 import com.ll.chatAi.domain.chat.comment.repository.CommentRepository;
 import com.ll.chatAi.domain.chat.member.entity.Member;
-import com.ll.chatAi.global.rsData.RsData;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,17 +30,15 @@ public class ArticleService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public RsData<Article> write(Long memberId, String title, String content) {
+    public Article write(String title, String content) {
 
         Article article = Article.builder()
-                .author(Member.builder().id(memberId).build())
+                .author(Member.builder().id(1L).build())
                 .title(title)
                 .content(content)
                 .build();
 
-        articleRepository.save(article);
-
-        return RsData.of("200","포스팅완료", article);
+        return articleRepository.save(article);
     }
 
     public Optional<Article> findById(Long articleId) {
@@ -52,13 +49,19 @@ public class ArticleService {
 
     //articleService.modify(article, "수정된 제목", "수정된 내용")
     @Transactional
-    public void modify(Article article, String title, String content) {
+    public Article modify(Article article, String title, String content) {
         article.setTitle(title);
         article.setContent(content);
-        articleRepository.save(article);
+//        articleRepository.save(article);
+        return article;
     }
 
     public List<Article> findAll() {
         return articleRepository.findAll();
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        this.articleRepository.deleteById(id);
     }
 }

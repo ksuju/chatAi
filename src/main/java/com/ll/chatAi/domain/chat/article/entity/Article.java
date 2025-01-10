@@ -32,14 +32,13 @@ import static jakarta.persistence.CascadeType.ALL;
 @Getter
 @Setter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
 public class Article extends BaseEntity {
-    private long articleId;
     private String title;
     private String content;
-//    @ManyToOne
+
     @ManyToOne(fetch = FetchType.LAZY)  // 배치사이즈 설정과 관련
     private Member author;
 
