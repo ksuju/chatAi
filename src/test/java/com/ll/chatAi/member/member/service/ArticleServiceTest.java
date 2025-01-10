@@ -3,7 +3,7 @@ package com.ll.chatAi.member.member.service;
 import com.ll.chatAi.domain.chat.article.entity.Article;
 import com.ll.chatAi.domain.chat.article.service.ArticleService;
 import com.ll.chatAi.domain.chat.member.entity.Member;
-import com.ll.chatAi.global.ut.Ut;
+import com.ll.chatAi.global.util.Ut;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

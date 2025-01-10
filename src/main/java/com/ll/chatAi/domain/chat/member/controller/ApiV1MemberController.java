@@ -4,6 +4,7 @@ import com.ll.chatAi.domain.chat.member.dto.MemberDto;
 import com.ll.chatAi.domain.chat.member.dto.MemberRequest;
 import com.ll.chatAi.domain.chat.member.entity.Member;
 import com.ll.chatAi.domain.chat.member.service.MemberService;
+import com.ll.chatAi.global.jwt.JwtProvider;
 import com.ll.chatAi.global.rsData.RsData;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ApiV1MemberController {
     private final MemberService memberService;
+    private final JwtProvider jwtProvider;
 
     // 회원가입
     @PostMapping("/signup")
@@ -32,12 +34,16 @@ public class ApiV1MemberController {
 
         Member member = memberService.signup(memberRequest.getUsername(), memberRequest.getPassword());
 
-        return RsData.of("200", "회원가입에 성공하였습니다.", new MemberDto(member));
+        return new RsData<>("200", "회원가입에 성공하였습니다.", new MemberDto(member));
     }
 
     // 로그인
     @PostMapping("/login")
-    public void login() {
+    public RsData<String> login(@Valid @RequestBody MemberRequest memberRequest) {
+        Member member = memberService.getMember(memberRequest.getUsername());
+        String token = jwtProvider.genAccessToken(member);
+
+        return new RsData<>("200", "로그인에 성공했습니다.", token);
     }
 
     // 로그아웃
