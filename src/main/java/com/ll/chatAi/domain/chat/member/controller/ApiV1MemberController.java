@@ -4,10 +4,7 @@ import com.ll.chatAi.domain.chat.member.entity.Member;
 import com.ll.chatAi.domain.chat.member.service.MemberService;
 import com.ll.chatAi.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * packageName    : com.ll.chatAi.domain.chat.member.controller
@@ -21,13 +18,31 @@ import org.springframework.web.bind.annotation.RestController;
  * 2025-01-08        kyd54       최초 생성
  */
 @RestController
-@RequestMapping("/api/v1/chat/members")
+@RequestMapping("/api/v1/members")
 @RequiredArgsConstructor
-public class MemberController {
+public class ApiV1MemberController {
     private final MemberService memberService;
 
-    @PostMapping("")
-    public RsData<Member> join(@RequestBody Member member) {
-        return memberService.join(member.getUsername(), member.getPassword());
+    // 회원가입
+    @PostMapping("/signup")
+    public RsData<Member> signup(@RequestBody Member member) {
+        return memberService.signup(member.getUsername(), member.getPassword());
+    }
+
+    // 로그인
+    @PostMapping("/login")
+    public void login() {
+    }
+
+    // 로그아웃
+    @GetMapping("/logout")
+    public void logout() {
+
+    }
+
+    // 내 정보 불러오기
+    @GetMapping("/me")
+    public void myInfo() {
+
     }
 }

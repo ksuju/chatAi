@@ -24,7 +24,7 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    public RsData<Member> join(String username, String password) {
+    public RsData<Member> signup(String username, String password) {
         Member member = Member.builder()
                 .username(username)
                 .password(password)
