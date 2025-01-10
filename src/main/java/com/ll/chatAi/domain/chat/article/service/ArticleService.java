@@ -34,14 +34,8 @@ public class ArticleService {
 
     // Pageable 페이징하는 내장 객체
     public Page<Article> search(List<String> kwTypes, String kw, Pageable pageable) {
-        if (kwTypes.contains("title") && kwTypes.contains("body")) {
-            return articleRepository.findByTitleContainingOrContentContaining(kw, kw, pageable);
-        } else if (kwTypes.contains("title")) {
-            return articleRepository.findByTitleContaining(kw, pageable);
-        } else if (kwTypes.contains("body")) {
-            return articleRepository.findByContentContaining(kw, pageable);
-        }
-        return articleRepository.findAll(pageable);
+        // 수정 : return articleRepository.findAll(pageable);
+        return articleRepository.search(kwTypes, kw, pageable);
     }
 
     @Transactional

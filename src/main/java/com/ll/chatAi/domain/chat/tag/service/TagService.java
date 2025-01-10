@@ -5,7 +5,6 @@ import com.ll.chatAi.domain.chat.tag.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,10 +25,10 @@ public class TagService {
 
 
     public List<ArticleTag> findByAuthorId(Long memberId) {
-        List<ArticleTag> tags= new ArrayList<>();
+        return tagRepository.findByArticle_Author_Id(memberId);
+    }
 
-        tagRepository.findByArticle_Author_Id(memberId);
-
-        return tags;
+    public List<ArticleTag> findByAuthorUsername(String username) {
+        return tagRepository.findByArticle_authorUsername(username);
     }
 }

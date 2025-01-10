@@ -88,9 +88,9 @@ public class NotProd {
 
 
                 // 채팅방 테스트 메시지 10개 생성
-//            IntStream.rangeClosed(1, 10).forEach(num -> {
-//                chatMessageService.add(chatRoom1, "TEST", "메시지" + num);
-//            });
+            IntStream.rangeClosed(1, 10).forEach(num -> {
+                chatMessageService.add(chatRoom1, "TEST", "메시지" + num);
+            });
 
                 // 12번 댓글 삭제
                 Comment lastComment = article3.getComments().getLast();

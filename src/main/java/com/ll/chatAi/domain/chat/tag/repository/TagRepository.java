@@ -18,4 +18,6 @@ import java.util.List;
  */
 public interface TagRepository extends JpaRepository<ArticleTag, Long> {
     List<ArticleTag> findByArticle_Author_Id(Long memberId);
+
+    List<ArticleTag> findByArticle_authorUsername(String authorUsername);
 }
