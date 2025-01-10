@@ -15,4 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * 2025-01-08        kyd54       최초 생성
  */
 public interface MemberRepository extends JpaRepository<Member, Long> {
+    Member findByUsername(String username);
 }

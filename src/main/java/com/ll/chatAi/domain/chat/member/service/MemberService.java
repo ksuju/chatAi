@@ -26,12 +26,18 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;  // 단방향 암호화 (복호화X)
 
     public Member signup(String username, String password) {
+        Member CheckedSignUpMember = memberRepository.findByUsername(username);
+
+        if (CheckedSignUpMember != null) {
+            throw new IllegalArgumentException("이미 존재하는 회원입니다.");
+        }
+
         Member member = Member.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
                 .build();
-        memberRepository.save(member);
-        return member;
+
+        return memberRepository.save(member);
     }
 
     //Member member1 = memberService.findById(1L).get();
