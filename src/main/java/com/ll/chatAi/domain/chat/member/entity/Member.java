@@ -32,9 +32,12 @@ import java.util.List;
 public class Member extends BaseEntity {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     @ToString.Exclude // 순환 참조 방지
+    @JsonIgnore
     private List<Article> articles;
 
     private String username;
     @JsonIgnore
     private String password;
+    @JsonIgnore
+    private String refreshToken;
 }

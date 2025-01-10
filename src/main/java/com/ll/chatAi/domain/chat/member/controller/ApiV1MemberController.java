@@ -7,10 +7,13 @@ import com.ll.chatAi.domain.chat.member.service.MemberService;
 import com.ll.chatAi.global.jwt.JwtProvider;
 import com.ll.chatAi.global.rsData.RsData;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * packageName    : com.ll.chatAi.domain.chat.member.controller
@@ -48,7 +51,20 @@ public class ApiV1MemberController {
         String token = jwtProvider.genAccessToken(member);
 
         // 응답 데이터에 accessToken 이름으로 토큰을 발급
-        response.addCookie(new Cookie("accessToken", token));
+        Cookie cookie = new Cookie("accessToken", token);
+        cookie.setHttpOnly(true);   // 브라우저에서 쿠키 정보 건들 수 없음
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60);
+        response.addCookie(cookie);
+
+        String refreshToken = member.getRefreshToken();
+        Cookie refreshTokenCookie  = new Cookie("refreshToken", refreshToken);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setSecure(true);
+        refreshTokenCookie.setPath("/");
+        refreshTokenCookie.setMaxAge(60 * 60);
+        response.addCookie(refreshTokenCookie);
 
         return new RsData<>("200", "로그인에 성공했습니다.");
     }
@@ -61,7 +77,23 @@ public class ApiV1MemberController {
 
     // 내 정보 불러오기
     @GetMapping("/me")
-    public void myInfo() {
+    public RsData<Member> myInfo(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        String accessToken = "";
 
+        for(Cookie cookie : cookies) {
+            if(cookie.getName().equals("accessToken")) {
+                accessToken = cookie.getValue();
+            }
+        }
+
+        Map<String, Object> claims = jwtProvider.getClaims(accessToken);
+        String username = (String)claims.get("username");
+
+        Member member = this.memberService.getMember(username);
+
+        return new RsData<Member>("200",
+                "내 정보를 성공적으로 불러왔습니다.",
+                member);
     }
 }

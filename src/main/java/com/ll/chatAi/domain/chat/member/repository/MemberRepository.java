@@ -3,6 +3,8 @@ package com.ll.chatAi.domain.chat.member.repository;
 import com.ll.chatAi.domain.chat.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 /**
  * packageName    : com.ll.chatAi.domain.chat.member.repository
  * fileName       : MemberRepository
@@ -16,4 +18,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByUsername(String username);
+    Optional<Member> findByRefreshToken(String refreshToken);
 }
